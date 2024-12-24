@@ -1,5 +1,6 @@
 package com.example.testvk.moviescreen
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -55,6 +56,7 @@ class MovieScreenFragment : Fragment() {
     private lateinit var errorLayout: LinearLayout
     private lateinit var retryButton: Button
     private lateinit var progressBar: ProgressBar
+    private lateinit var shareButton: ImageView
 
 
     override fun onCreateView(
@@ -85,6 +87,7 @@ class MovieScreenFragment : Fragment() {
         errorLayout = view.findViewById(R.id.error_layout)
         retryButton = view.findViewById(R.id.retry_button)
         progressBar = view.findViewById(R.id.progress_bar)
+        shareButton = view.findViewById(R.id.shareButton)
 
         val layoutManager =
             GridLayoutManager(requireContext(), 3, GridLayoutManager.HORIZONTAL, false)
@@ -207,7 +210,19 @@ class MovieScreenFragment : Fragment() {
         toolBar.setNavigationOnClickListener {
             parentFragmentManager.popBackStack()
         }
+        shareButton.setOnClickListener {
+            if (!movieName.text.isNullOrEmpty()){
+                viewModel.movie.value?.name?.let { it1 -> shareContent(it1) }
+            }
+        }
+    }
 
+    private fun shareContent(text: String) {
+        val shareIntent = Intent(Intent.ACTION_SEND).apply {
+            type = "text/plain"
+            putExtra(Intent.EXTRA_TEXT, text)
+        }
+        startActivity(Intent.createChooser(shareIntent, "Выберите приложение для отправки"))
     }
 
     private fun Int.toSeasonsString(): String =

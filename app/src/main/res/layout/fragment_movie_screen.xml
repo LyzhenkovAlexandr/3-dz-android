@@ -25,6 +25,16 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <ImageView
+        android:id="@+id/shareButton"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/share_icon"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/topAppBarLayout"
+        app:layout_constraintEnd_toEndOf="@+id/topAppBarLayout"
+        app:layout_constraintTop_toTopOf="@+id/topAppBarLayout" />
+
+    <ImageView
         android:id="@+id/moviePoster"
         android:layout_width="126dp"
         android:layout_height="168dp"
