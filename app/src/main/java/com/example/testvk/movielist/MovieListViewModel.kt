@@ -1,6 +1,5 @@
 package com.example.testvk.movielist
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -40,9 +39,6 @@ class MovieListViewModel(
     }
 
     private fun fetchMovies(genre: Genre? = null) {
-        Log.d("MovieListViewModel", "Fetching movies...")
-        Log.e("fetchMoviesGenre", genre?.name.toString())
-
         currentPagingSource?.invalidate()
         currentPagingSource = null
 
@@ -64,7 +60,6 @@ class MovieListViewModel(
         viewModelScope.launch {
             pager.flow.cachedIn(viewModelScope).collectLatest {
                 _movies.postValue(it)
-                Log.d("MovieListViewModel", "Movies fetched successfully.")  // Логируем успешную загрузку
             }
         }
     }
@@ -78,8 +73,7 @@ class MovieListViewModel(
                         _genres.postValue(response.body())
                     }
                 }
-            } catch (ex: Exception) {
-                Log.e("ViewModelScope", ex.message ?: "fetchGenres failed")
+            } catch (_: Exception) {
             }
         }
     }
@@ -94,12 +88,10 @@ class MovieListViewModel(
     }
 
     fun selectMovie(movieId: Int) {
-        Log.d("MovieListViewModel", "Movie selected with ID: $movieId")
         _selectedMovieId.value = movieId
     }
 
     fun chooseGenre (genre: Genre) {
-        Log.e("chooseGenre", genre.name)
         fetchMovies(genre)
     }
 }

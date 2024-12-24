@@ -1,6 +1,5 @@
 package com.example.testvk.network
 
-import android.util.Log
 import androidx.paging.PagingSource
 import com.example.testvk.dataclasses.Genre
 import com.example.testvk.dataclasses.Movie
@@ -20,7 +19,6 @@ class MovieRepository(private val apiService: ApiService, private val networkDel
     }
 
     fun getMoviesByGenrePagingSource(genre: Genre): PagingSource<Int, Movie> {
-        Log.e("getMoviesByGenrePagingSource", genre.toString())
         return MoviePagingSource(genre = genre, apiService, networkDelayMillis)
     }
 

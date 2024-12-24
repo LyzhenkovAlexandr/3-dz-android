@@ -1,7 +1,6 @@
 package com.example.testvk.movielist
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,8 +23,6 @@ class MovieListFragment : Fragment() {
     private lateinit var genresList: RecyclerView
     private lateinit var retryButton: Button
     private lateinit var viewModel: MovieListViewModel
-    private var isClearingData = false
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -74,7 +71,6 @@ class MovieListFragment : Fragment() {
         adapter.addLoadStateListener { loadState ->
             val isLoading = loadState.source.refresh is LoadState.Loading
             val isError = loadState.source.refresh is LoadState.Error
-            Log.d("MovieListFragment", "isLoading: $isLoading, isError: $isError")
 
             view.findViewById<View>(R.id.progress_bar)?.visibility =
                 if (isLoading) View.VISIBLE else View.GONE
@@ -91,18 +87,12 @@ class MovieListFragment : Fragment() {
         }
         viewModel.selectedMovieId.observe(viewLifecycleOwner) { movieId ->
             movieId?.let {
-                Log.d("FragmentNavigation", "Navigating to MovieScreenFragment with ID: $it")
                 navigateToMovieDetails(it)
             }
         }
     }
 
     private fun navigateToMovieDetails(movieId: Int) {
-        Log.d(
-            "MovieListFragment",
-            "Navigating to MovieScreenFragment with ID: $movieId"
-        )
-
         val args = Bundle().apply {
             putInt("EXTRA_ID", movieId)
         }
@@ -115,10 +105,5 @@ class MovieListFragment : Fragment() {
             .replace(R.id.fragment_container, selectedFilmFragment)
             .addToBackStack(null)
             .commit()
-
-        Log.d(
-            "MovieListFragment",
-            "Fragment replaced successfully."
-        )
     }
 }

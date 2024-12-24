@@ -1,7 +1,6 @@
 package com.example.testvk.moviescreen
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -206,10 +205,6 @@ class MovieScreenFragment : Fragment() {
 
 
         toolBar.setNavigationOnClickListener {
-            Log.d(
-                "MovieScreenFragment",
-                "Back button clicked, popping fragment from back stack."
-            )
             parentFragmentManager.popBackStack()
         }
 
